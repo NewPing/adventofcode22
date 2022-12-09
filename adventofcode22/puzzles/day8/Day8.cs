@@ -11,67 +11,67 @@ namespace adventofcode22.puzzles.day8
     {
         public Day8()
         {
-            var lines = File.ReadAllLines(@"puzzles\day8\exampleInput.txt");
+            var lines = File.ReadAllLines(@"puzzles\day8\input2.txt");
             var data =
                 lines.Select(
                     line => line.Select(
                         number => new Tuple<int, bool>(int.Parse(number.ToString()), false)
                     ).ToList()
                 ).ToList();
-            var data2 =
-                lines.Select(
-                    line => line.Select(
-                        number => new Tuple<int, Tuple<int, int, int, int>>(int.Parse(number.ToString()), new Tuple<int, int, int, int>(0, 0, 0, 0))
-                    ).ToList()
-                ).ToList();
 
-            //markVisible(data);
-            //Console.WriteLine(data.Select(x => x.Where(n => n.Item2).Count()).Sum());
-
-            for (int x = 0; x < data2.Count; x++)
+            markVisible(data);
+            Console.WriteLine(data.Select(x => x.Where(n => n.Item2).Count()).Sum());
+            var data2 = lines.Select(line => line.Select(number =>(int.Parse(number.ToString()))).ToList()).ToList();
+            var scores = new List<List<int>>();
+            for (int x = 0; x < data.Count; x++)
             {
-                for (int y = 0; y < data2[x].Count; y++)
+                var scoresLine = new List<int>();
+                for (int y = 0; y < data[x].Count; y++)
                 {
-                    data2[x][y] = new Tuple<int, Tuple<int, int, int, int>>(data2[x][y].Item1, rankVisibilityScore(data2, x, y));
+                    scoresLine.Add(rankVisibilityScore(data2, x, y));
                 }
+                scores.Add(scoresLine);
             }
+            Console.WriteLine(scores.Select(x => x.Max()).Max());
         }
+    
 
-        public Tuple<int, int, int, int> rankVisibilityScore(List<List<Tuple<int, Tuple<int, int, int, int>>>> data, int xStart, int yStart)
+        public int rankVisibilityScore(List<List<int>> data, int xStart, int yStart)
         {
             int scoreLeft = 0;
             int scoreRight = 0;
             int scoreTop = 0;
             int scoreBottom = 0;
+            int viewingHeight = data[yStart][xStart];
             //left to right
-            for (int i = xStart; i < data.Count -1; i++)
+            for (int i = xStart; i < data.Count-1; i++)
             {
-                if (data[yStart][i].Item1 > data[yStart][i + 1].Item1)
+                if (viewingHeight > data[yStart][i + 1])
                 {
-                    scoreLeft++;
+                    scoreRight++;
                 } else
                 {
-                    scoreLeft++;
+                    scoreRight++;
                     break;
                 }
             }
             //right to left
-            for (int i = xStart; i > 0; i--)
+            for (int i = xStart ; i > 0; i--)
             {
-                if (data[yStart][i].Item1 > data[yStart][i - 1].Item1)
+                if (viewingHeight > data[yStart][i - 1])
                 {
-                    scoreRight++;
+                    scoreLeft++;
                 }
                 else
                 {
-                    scoreRight++;
+                    scoreLeft++;
                     break;
                 }
             }
             //bottom to top
-            for (int i = yStart; i > 0; i--)
+            for (int i = yStart ; i > 0; i--)
             {
-                if (data[i][yStart].Item1 > data[i][yStart-1].Item1)
+                if (viewingHeight  > data[i-1][xStart])
                 {
                     scoreTop++;
                 }
@@ -82,9 +82,9 @@ namespace adventofcode22.puzzles.day8
                 }
             }
             //top to bottom
-            for (int i = yStart; i < data.Count-1; i++)
+            for (int i = yStart; i < data.Count - 1; i++)
             {
-                if (data[i][yStart].Item1 > data[i][yStart+1].Item1)
+                if (viewingHeight > data[i+1][xStart])
                 {
                     scoreBottom++;
                 }
@@ -95,9 +95,8 @@ namespace adventofcode22.puzzles.day8
                 }
             }
 
-            return new Tuple<int, int, int, int>(scoreTop, scoreLeft, scoreBottom, scoreRight);
+            return scoreTop * scoreLeft * scoreBottom * scoreRight;
         }
-
 
         public void markVisible(List<List<Tuple<int, bool>>> data)
         {
