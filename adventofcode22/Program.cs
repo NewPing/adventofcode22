@@ -6,6 +6,7 @@ using adventofcode22.puzzles.day5;
 using adventofcode22.puzzles.day6;
 using adventofcode22.puzzles.day7;
 using adventofcode22.puzzles.day8;
+using adventofcode22.puzzles.day9;
 
 namespace adventofcode22
 {
@@ -21,7 +22,8 @@ namespace adventofcode22
             //new Day5();
             //new Day6();
             //new Day7();
-            new Day8();
+            //new Day8();
+            new Day9();
         }
     }
 }
