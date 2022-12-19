@@ -11,7 +11,7 @@ namespace adventofcode22.puzzles.day8
     {
         public Day8()
         {
-            var lines = File.ReadAllLines(@"puzzles\day8\input2.txt");
+            var lines = File.ReadAllLines(@"puzzles\day8\input1.txt");
             var data =
                 lines.Select(
                     line => line.Select(
