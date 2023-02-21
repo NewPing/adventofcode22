@@ -17,7 +17,17 @@ namespace adventofcode22.puzzles.day13
             var input = File.ReadAllText(@"puzzles\day13\exampleInput.txt");
             prepData(input);
         }
-
+        /*
+         * [[4,[4, 4]],4,4,4]
+depth = 0;
+[ depth++;
+[ depth++;
+tmpTuple = (4, depth) //depth = 2
+[ depth++;
+tmpTuple = (4, depth) //depth = 3
+tmpTuple = (4, depth) //depth = 3
+] depth--;
+        */
         public void prepData(string input)
         {
 
