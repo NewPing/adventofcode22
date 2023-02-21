@@ -2,6 +2,7 @@
 using adventofcode22.puzzles.day10;
 using adventofcode22.puzzles.day11;
 using adventofcode22.puzzles.day12;
+using adventofcode22.puzzles.day13;
 using adventofcode22.puzzles.day2;
 using adventofcode22.puzzles.day3;
 using adventofcode22.puzzles.day4;
@@ -29,7 +30,8 @@ namespace adventofcode22
             //new Day9();
             //new Day10();
             //new Day11();
-            new Day12();
+            //new Day12();
+            new Day13();
         }
     }
 }
